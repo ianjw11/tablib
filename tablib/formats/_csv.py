@@ -28,18 +28,22 @@ def export_set(dataset):
 
     return stream.getvalue()
 
-
 def import_set(dset, in_stream, headers=True):
     """Returns dataset from CSV stream."""
-
     dset.wipe()
+    try:
+      _import_set(dset, in_stream, headers=True)
+    except:
+      _import_set(dset, in_stream, headers=True, quotechar='|')
 
+
+def _import_set(dset, in_stream, headers=True, quotechar='"'):
+    dset.wipe()
     if is_py3:
-        rows = csv.reader(StringIO(in_stream))
+        rows = csv.reader(in_stream.splitlines(), quotechar=quotechar)
     else:
-        rows = csv.reader(StringIO(in_stream), encoding=DEFAULT_ENCODING)
+        rows = csv.reader(in_stream.splitlines(), encoding=DEFAULT_ENCODING, quotechar=quotechar)
     for i, row in enumerate(rows):
-
         if (i == 0) and (headers):
             dset.headers = row
         else:

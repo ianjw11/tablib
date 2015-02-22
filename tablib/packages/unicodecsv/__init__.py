@@ -95,7 +95,7 @@ class UnicodeWriter(object):
 writer = UnicodeWriter
 
 class UnicodeReader(object):
-    def __init__(self, f, dialect=None, encoding='utf-8', errors='strict',
+    def __init__(self, f, dialect=None, encoding='utf-8', errors='ignore',
                  **kwds):
         format_params = ['delimiter', 'doublequote', 'escapechar', 'lineterminator', 'quotechar', 'quoting', 'skipinitialspace']
         if dialect is None:
